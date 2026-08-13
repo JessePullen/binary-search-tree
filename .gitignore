@@ -1,0 +1,6 @@
+**/*Zone.Identifier
+node_modules
+
+
+# Removes all ignored files from repo
+# git rm -r --cached . && git add . && git commit -am "Remove ignored files"
