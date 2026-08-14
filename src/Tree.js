@@ -38,4 +38,30 @@ export default class Tree {
 		}
 		return false;
 	}
+	insert(value) {
+		if (this.root === null) {
+			this.root = new Node(value);
+		}
+
+		if (this.includes(value)) {
+			return;
+		}
+
+		let current = this.root;
+		let previous = current;
+
+		while (current !== null) {
+			previous = current;
+			if (current.data > value) {
+				current = current.left;
+			} else {
+				current = current.right;
+			}
+		}
+		if (previous.data < value) {
+			previous.right = new Node(value);
+		} else {
+			previous.left = new Node(value);
+		}
+	}
 }
