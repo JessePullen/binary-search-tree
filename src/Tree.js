@@ -8,7 +8,7 @@ export default class Tree {
 	// # makes private
 	#buildTree(array) {
 		if (array.length === 0) {
-			return;
+			return null;
 		}
 
 		array.sort((a, b) => a - b);
@@ -22,5 +22,20 @@ export default class Tree {
 		const right = array.slice(middleIndex + 1);
 
 		return new Node(middleValue, this.#buildTree(left), this.#buildTree(right));
+	}
+	includes(value) {
+		let current = this.root;
+
+		while (current !== null) {
+			if (current.data === value) {
+				return true;
+			}
+			if (current.data > value) {
+				current = current.left;
+			} else {
+				current = current.right;
+			}
+		}
+		return false;
 	}
 }

@@ -26,5 +26,12 @@ test('recursively builds the tree', () => {
 test('handles an empty array', () => {
 	const tree = new Tree([]);
 
-	expect(tree.root).toBeUndefined();
+	expect(tree.root).toBeNull();
+});
+
+test('should check the tree for a value returning true if present or false if not', () => {
+	const tree = new Tree([1, 2, 3]);
+
+	expect(tree.includes(1)).toBeTruthy();
+	expect(tree.includes(5)).toBeFalsy();
 });
