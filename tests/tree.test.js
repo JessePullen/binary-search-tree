@@ -79,3 +79,82 @@ describe('insert()', () => {
 		expect(tree.root.data).toBe(5);
 	});
 });
+
+describe('remove()', () => {
+	test('removing a node that does not exist in tree should do nothing', () => {
+		const tree = new Tree([8, 4, 12]);
+
+		expect(tree.remove(1)).toBeUndefined();
+	});
+
+	test('removing the only node should leave an empty tree', () => {
+		const tree = new Tree([8]);
+
+		tree.remove(8);
+
+		expect(tree.root).toBeNull();
+	});
+
+	test('removing a node with no children should remove the node and leave rest of tree unchanged', () => {
+		const tree = new Tree([8, 4, 12]);
+		//       8
+		//      / \
+		//     4   12
+
+		tree.remove(12);
+
+		expect(tree.root.data).toBe(8);
+		expect(tree.root.left.data).toBe(4);
+		expect(tree.root.right).toBeNull();
+	});
+
+	test('removing a node with one child should remove the node and the child should take its place', () => {
+		const tree = new Tree([8, 4, 12, 16, 20]);
+		//       12
+		//      / \
+		//     8   20
+		//	  /    /
+		//   4    16
+
+		tree.remove(20);
+
+		// one step down
+		expect(tree.root.right.data).toBe(16);
+	});
+
+	test('removing a node with two children should replace it with its successor of right tree', () => {
+		const tree = new Tree([8, 4, 12, 2, 6, 10, 14]);
+		//          8
+		//        /   \
+		//       4     12
+		//      / \    / \
+		//     2   6  10  14
+
+		tree.remove(8);
+
+		expect(tree.root.data).toBe(10);
+		expect(tree.root.left.data).toBe(4);
+		expect(tree.root.right.data).toBe(12);
+	});
+	test('removing a node with child on an unbalanced tree preserves the successor right child', () => {
+		const tree = new Tree([4, 8, 12]);
+
+		tree.insert(10);
+		tree.insert(11);
+
+		//       8
+		//      / \
+		//     4   12
+		//         /
+		//        10
+		//          \
+		//           11
+
+		tree.remove(8);
+
+		expect(tree.root.data).toBe(10);
+		expect(tree.root.left.data).toBe(4);
+		expect(tree.root.right.data).toBe(12);
+		expect(tree.root.right.left.data).toBe(11);
+	});
+});

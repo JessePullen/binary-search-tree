@@ -58,10 +58,73 @@ export default class Tree {
 				current = current.right;
 			}
 		}
+
 		if (previous.data < value) {
 			previous.right = new Node(value);
 		} else {
 			previous.left = new Node(value);
 		}
+	}
+	remove(value) {
+		if (!this.includes(value)) {
+			return;
+		}
+
+		if (this.root.right === null && this.root.left === null) {
+			this.root = null;
+			return;
+		}
+
+		let current = this.root;
+		let previous = current;
+
+		while (current.data !== value) {
+			previous = current;
+			if (current.data > value) {
+				current = current.left;
+			} else {
+				current = current.right;
+			}
+		}
+
+		let direction = 'left';
+		if (previous.right.data === value) {
+			direction = 'right';
+		}
+
+		// Node has no children
+		if (current.right === null && current.left === null) {
+			previous[direction] = null;
+			return;
+		}
+
+		// Node has one child
+		if (current.right === null) {
+			previous[direction] = current.left;
+			return;
+		} else if (current.left === null) {
+			previous[direction] = current.right;
+			return;
+		}
+
+		// Node has 2 children
+		const targetNode = current;
+		current = current.right;
+		previous = current;
+
+		while (current.left !== null) {
+			previous = current;
+			current = current.left;
+		}
+
+		// Node of unbalanced tree is successor with child
+		if (current.right !== null) {
+			previous.left = current.right;
+		} else {
+			// Otherwise remove
+			previous.left = null;
+		}
+
+		targetNode.data = current.data;
 	}
 }
