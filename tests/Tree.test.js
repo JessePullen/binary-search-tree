@@ -158,3 +158,23 @@ describe('remove()', () => {
 		expect(tree.root.right.left.data).toBe(11);
 	});
 });
+
+test('levelOrderForEach should take a callback and throw error if not', () => {
+	const tree = new Tree([]);
+
+	// Anonymous function lets function run before checking for error toThrow
+	expect(() => tree.levelOrderForEach()).toThrow(Error);
+});
+
+test('levelOrderForEach should traverse the tree level by level, left to right and takes a callback', () => {
+	const tree = new Tree([8, 4, 12, 2, 6, 10, 14]);
+	//          8
+	//        /   \
+	//       4     12
+	//      / \    / \
+	//     2   6  10  14
+
+	const array = [];
+	tree.levelOrderForEach((value) => array.push(value));
+	expect(array).toEqual([8, 4, 12, 2, 6, 10, 14]);
+});

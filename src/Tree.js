@@ -127,4 +127,27 @@ export default class Tree {
 
 		targetNode.data = current.data;
 	}
+	levelOrderForEach(callback) {
+		if (!callback) {
+			throw new Error('A callback function is required');
+		}
+
+		if (this.root === null) {
+			return;
+		}
+
+		const queue = [this.root];
+
+		while (queue.length > 0) {
+			const current = queue[0];
+			if (current.left) {
+				queue.push(current.left);
+			}
+			if (current.right) {
+				queue.push(current.right);
+			}
+			callback(current.data);
+			queue.shift();
+		}
+	}
 }
