@@ -136,6 +136,7 @@ export default class Tree {
 			return;
 		}
 
+		// Solved Iteratively
 		const queue = [this.root];
 
 		while (queue.length > 0) {
@@ -149,5 +150,48 @@ export default class Tree {
 			callback(current.data);
 			queue.shift();
 		}
+	}
+	// Solved recursively
+	levelOrderForEachRecursively(callback, node, queue = [this.root.data]) {
+		if (!callback) {
+			throw new Error('A callback function is required');
+		}
+
+		if (this.root === null) {
+			return;
+		}
+
+		if (node === null) {
+			return;
+		}
+
+		const paths = ['left', 'right'];
+
+		let current = this.root;
+
+		if (node) {
+			current = node;
+		}
+
+		// Queues children of current
+		if (current.left !== null) {
+			queue.push(current.left.data);
+		}
+		if (current.right !== null) {
+			queue.push(current.right.data);
+		}
+
+		// Traverses tree recursively
+		for (const path of paths) {
+			this.levelOrderForEachRecursively(callback, current[path], queue);
+		}
+
+		if (queue[0] !== undefined) {
+			// result.push(queue[0]);
+			callback(queue[0]);
+			queue.shift();
+		}
+
+		// return result;
 	}
 }
