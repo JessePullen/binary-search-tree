@@ -204,3 +204,16 @@ test('inOrderForEach should traverse the tree left to right and take a callback'
 	tree.inOrderForEach((value) => array.push(value));
 	expect(array).toEqual([2, 4, 6, 8, 10, 12, 14]);
 });
+
+test('postOrderForEach should traverse the tree left to right, then current and take a callback', () => {
+	const tree = new Tree([8, 4, 12, 2, 6, 10, 14]);
+	//          8
+	//        /   \
+	//       4     12
+	//      / \    / \
+	//     2   6  10  14
+
+	const array = [];
+	tree.postOrderForEach((value) => array.push(value));
+	expect(array).toEqual([2, 6, 4, 10, 14, 12, 8]);
+});

@@ -231,4 +231,23 @@ export default class Tree {
 		callback(current.data);
 		this.inOrderForEach(callback, current.right);
 	}
+	postOrderForEach(callback, node) {
+		if (!callback) {
+			throw new Error('A callback function is required');
+		}
+
+		if (node === null) {
+			return;
+		}
+
+		let current = this.root;
+
+		if (node) {
+			current = node;
+		}
+
+		this.postOrderForEach(callback, current.left);
+		this.postOrderForEach(callback, current.right);
+		callback(current.data);
+	}
 }
