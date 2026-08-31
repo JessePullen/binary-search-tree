@@ -191,7 +191,25 @@ export default class Tree {
 			callback(queue[0]);
 			queue.shift();
 		}
+	}
+	preOrderForEach(callback, node) {
+		if (!callback) {
+			throw new Error('A callback function is required');
+		}
 
-		// return result;
+		if (node === null) {
+			return;
+		}
+
+		let current = this.root;
+
+		if (node) {
+			current = node;
+		}
+
+		callback(current.data);
+
+		this.preOrderForEach(callback, current.left);
+		this.preOrderForEach(callback, current.right);
 	}
 }
