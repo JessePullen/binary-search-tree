@@ -217,3 +217,32 @@ test('postOrderForEach should traverse the tree left to right, then current and 
 	tree.postOrderForEach((value) => array.push(value));
 	expect(array).toEqual([2, 6, 4, 10, 14, 12, 8]);
 });
+
+test('height should return the number of edges from a node to its furthest leaf', () => {
+	const tree = new Tree([8, 4, 12, 2, 6, 10, 14]);
+	//          8
+	//        /   \
+	//       4     12
+	//      / \    / \
+	//     2   6  10  14
+
+	expect(tree.height(2)).toBe(0);
+	expect(tree.height(4)).toBe(1);
+	expect(tree.height(8)).toBe(2);
+	expect(tree.height(99)).toBeUndefined();
+});
+
+test('height should return the number of edges from a node to its furthest leaf on an unbalanced tree', () => {
+	const tree = new Tree([8, 4, 12, 2, 6, 10, 14]);
+	//          8
+	//        /   \
+	//       4     12
+	//      / \    / \
+	//     2   6  10  14
+	//          \
+	//           7
+
+	tree.insert(7);
+
+	expect(tree.height(8)).toBe(3);
+});

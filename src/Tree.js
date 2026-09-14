@@ -187,7 +187,6 @@ export default class Tree {
 		}
 
 		if (queue[0] !== undefined) {
-			// result.push(queue[0]);
 			callback(queue[0]);
 			queue.shift();
 		}
@@ -249,5 +248,33 @@ export default class Tree {
 		this.postOrderForEach(callback, current.left);
 		this.postOrderForEach(callback, current.right);
 		callback(current.data);
+	}
+	// Count remaining leaf nodes below value
+	height(value) {
+		if (this.includes(value) === false) {
+			return undefined;
+		}
+
+		let current = this.root;
+
+		while (current.data !== value) {
+			if (current.data > value) {
+				current = current.left;
+			} else {
+				current = current.right;
+			}
+		}
+
+		// Counts height of all leaf nodes of current.
+		function treeHeight(node) {
+			if (node === null) {
+				return 0;
+			}
+
+			return 1 + Math.max(treeHeight(node.left), treeHeight(node.right));
+		}
+
+		// Removes 1 to account for null node being base case which returns 1 for a leaf node above null node.
+		return treeHeight(current) - 1;
 	}
 }
