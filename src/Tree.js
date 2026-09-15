@@ -277,4 +277,22 @@ export default class Tree {
 		// Removes 1 to account for null node being base case which returns 1 for a leaf node above null node.
 		return treeHeight(current) - 1;
 	}
+	depth(value) {
+		let current = this.root;
+		let count = 0;
+
+		while (current !== null) {
+			if (current.data === value) {
+				return count;
+			}
+			if (current.data > value) {
+				current = current.left;
+			} else {
+				current = current.right;
+			}
+			count++;
+		}
+
+		return undefined;
+	}
 }

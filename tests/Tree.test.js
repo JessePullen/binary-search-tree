@@ -246,3 +246,17 @@ test('height should return the number of edges from a node to its furthest leaf 
 
 	expect(tree.height(8)).toBe(3);
 });
+
+test('returns the depth of a given node', () => {
+	const tree = new Tree([10, 5, 15, 2, 7]);
+	//          7
+	//        /   \
+	//       5     15
+	//      /     / 
+	//     2     10  
+
+	expect(tree.depth(7)).toBe(0);
+	expect(tree.depth(5)).toBe(1);
+	expect(tree.depth(2)).toBe(2);
+	expect(tree.depth(99)).toBeUndefined();
+});
