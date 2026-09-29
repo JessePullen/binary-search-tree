@@ -295,4 +295,27 @@ export default class Tree {
 
 		return undefined;
 	}
+	isBalanced() {
+		// Counts height of all leaf nodes of current.
+		function treeHeight(node) {
+			if (node === null) {
+				return 0;
+			}
+
+			return 1 + Math.max(treeHeight(node.left), treeHeight(node.right));
+		}
+
+		// Checks each node is balanced
+		function checkBalance(node) {
+			if (node === null) {
+				return true;
+			}
+
+			const balanced = Math.abs(treeHeight(node.left) - treeHeight(node.right)) <= 1;
+
+			return balanced && checkBalance(node.left) && checkBalance(node.right);
+		}
+
+		return checkBalance(this.root);
+	}
 }
