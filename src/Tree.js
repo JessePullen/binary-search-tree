@@ -318,4 +318,11 @@ export default class Tree {
 
 		return checkBalance(this.root);
 	}
+	rebalance() {
+		const nodes = [];
+
+		this.inOrderForEach((value) => nodes.push(value));
+
+		this.root = this.#buildTree(nodes);
+	}
 }
